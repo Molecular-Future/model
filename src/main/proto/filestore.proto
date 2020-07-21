@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package org.mos.evfs.model;
+
+
+message FileSegment{
+	int32	index = 1;
+	int32	skip = 2;
+	int32	size = 3;
+	string	segmentUuid = 4;
+	string	segmentSecretKey = 5;
+	repeated string	nodesCoAddress = 6;//在哪些节点
+	repeated string	nodesUrl = 7;//在哪些节点
+	string	partSign  = 8;//签名数据
+	int64	volumeCount = 9;//该分片有多少721V可以挖
+
+}
+
+message FileInfo{
+	string 	from = 1;//从哪个地址来的
+	int32  	fileSize = 2;	//文件大小
+	string 	filename = 3;//文件名
+	string 	fileDesc = 4;//文件描述
+	string	domain = 5;//文件所属域
+	string	symbol721c = 6;// 721token的名称
+	repeated FileSegment parts = 7;//
+	int32	repeatCount = 8;//备份个数
+	int32 	sliceCount = 9;//分片数量
+	int64	totalVolumeCount = 10;//该文件一共有多少个721V
+	int64	storeDeadLine = 11;//存储时间限制
+	int64	onChainDeadLine=12;//上链时间限制
+	repeated string authoriseAddrs = 13;//授权账户地址列表
+	string	fileSign = 14;//文件内容MD5
+    bytes exData = 15;//附加信息
+}
+
+message FileTrunk{
+	repeated bytes fileIdx = 1;//文件索引
+}
