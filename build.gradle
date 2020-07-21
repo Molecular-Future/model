@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+buildscript {
+	dependencies { 
+		classpath "onight.osgi:zpp-gradle_1.8:3.4.0"
+	}
+}
+
+version = '3.0.0'
+project.group='org.mos'
+
+apply plugin: 'zippo'
+
+dependencies {    
+	compile ("org.fc.zippo:org.fc.zippo.oapi:4.0.2")
+}
+
+protobuf {
+    generatedFilesBaseDir = "$projectDir/src"
+    generateProtoTasks {
+	  ofSourceSet('main')
+	}
+}
+sourceSets {
+  main {
+    proto {
+      srcDir '$projectDir/src/main/proto'
+    }
+    java {
+      srcDir '$projectDir/src/main/java'
+    }
+  }
+}
+
+jar {
+	manifest{
+		attributes( 'Import-Ignore':'com.google.protobuf')
+		attributes( 'provider':'org.brewchain')
+	}
+}
